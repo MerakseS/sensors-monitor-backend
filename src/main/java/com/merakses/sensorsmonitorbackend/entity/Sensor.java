@@ -34,12 +34,12 @@ public class Sensor {
 
     @NotBlank(message = "Name is required")
     @Length(message = "Name length can't be more than 30 symbols.", max = 30)
-    @Column(name = "name", length = 30)
+    @Column(name = "name", nullable = false, length = 30)
     private String name;
 
-    @Column(name = "model", length = 15)
     @NotBlank(message = "Model is required")
     @Length(message = "Model length can't be more than 15 symbols.", max = 15)
+    @Column(name = "model", nullable = false, length = 15)
     private String model;
 
     @Column(name = "range_from")

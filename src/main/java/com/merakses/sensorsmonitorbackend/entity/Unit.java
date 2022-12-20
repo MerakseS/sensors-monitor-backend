@@ -20,7 +20,7 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor
 @Entity
-@Table(name = "unit")
+@Table(name = "units")
 public class Unit {
 
     @Id

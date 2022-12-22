@@ -2,18 +2,20 @@ package com.merakses.sensorsmonitorbackend.dto;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.merakses.sensorsmonitorbackend.validation.FieldLessThanAnother;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-//TODO Range validation
 @Data
+@FieldLessThanAnother(from = "rangeFrom", to = "rangeTo", message = "From should be less than To.")
 public class SensorRequestDto {
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Name is required.")
     @Length(message = "Name length can't be more than 30 symbols.", max = 30)
     private String name;
 
-    @NotBlank(message = "Model is required")
+    @NotBlank(message = "Model is required.")
     @Length(message = "Model length can't be more than 15 symbols.", max = 15)
     private String model;
 

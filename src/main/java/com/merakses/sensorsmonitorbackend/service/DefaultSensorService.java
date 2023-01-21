@@ -42,6 +42,18 @@ public class DefaultSensorService implements SensorService {
         return sensor;
     }
 
+    @Override
+    @Transactional
+    public Sensor update(long id, Sensor sensor) {
+        getSensorById(id);
+
+        sensor.setId(id);
+        sensorRepository.save(sensor);
+
+        log.info("Successfully updated sensor with id {}", sensor.getId());
+        return sensor;
+    }
+
     private Sensor getSensorById(long id) {
         return sensorRepository.findById(id).orElseThrow(() ->
             new EntityNotFoundException(String.format("Can't find sensor with id %d", id))

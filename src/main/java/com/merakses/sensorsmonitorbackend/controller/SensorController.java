@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,6 +46,15 @@ public class SensorController {
     @GetMapping("/{id}")
     public ResponseEntity<SensorResponseDto> get(@PathVariable long id) {
         Sensor sensor = sensorService.get(id);
+        return ResponseEntity.ok(sensorMapper.mapSensorToResponseDto(sensor));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SensorResponseDto> update(@PathVariable long id,
+        @RequestBody @Valid SensorRequestDto sensorRequestDto) {
+
+        Sensor sensor = sensorMapper.mapRequestDtoToSensor(sensorRequestDto);
+        sensor = sensorService.update(id, sensor);
         return ResponseEntity.ok(sensorMapper.mapSensorToResponseDto(sensor));
     }
 }

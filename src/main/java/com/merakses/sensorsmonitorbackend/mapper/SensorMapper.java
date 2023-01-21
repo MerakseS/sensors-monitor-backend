@@ -29,8 +29,8 @@ public abstract class SensorMapper {
     @Mapping(target = "unit", source = "unitId")
     public abstract Sensor mapRequestDtoToSensor(SensorRequestDto requestDto);
 
-    @Mapping(target = "typeId", source = "type.id")
-    @Mapping(target = "unitId", source = "unit.id")
+    @Mapping(target = "type", source = "type.name")
+    @Mapping(target = "unit", source = "unit.name")
     public abstract SensorResponseDto mapSensorToResponseDto(Sensor sensor);
 
     public abstract List<SensorResponseDto> mapSensorListToResponseDtoList(List<Sensor> sensorList);

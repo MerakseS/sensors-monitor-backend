@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,12 @@ public class SensorController {
     public ResponseEntity<List<SensorResponseDto>> getAll() {
         List<Sensor> sensorList = sensorService.getAll();
         return ResponseEntity.ok(sensorMapper.mapSensorListToResponseDtoList(sensorList));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SensorResponseDto> get(@PathVariable long id) {
+        Sensor sensor = sensorService.get(id);
+        return ResponseEntity.ok(sensorMapper.mapSensorToResponseDto(sensor));
     }
 }
 

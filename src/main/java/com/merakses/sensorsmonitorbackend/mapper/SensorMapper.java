@@ -11,6 +11,7 @@ import com.merakses.sensorsmonitorbackend.dto.SensorResponseDto;
 import com.merakses.sensorsmonitorbackend.entity.Sensor;
 import com.merakses.sensorsmonitorbackend.entity.Type;
 import com.merakses.sensorsmonitorbackend.entity.Unit;
+import com.merakses.sensorsmonitorbackend.exception.EntityNotFoundException;
 import com.merakses.sensorsmonitorbackend.repository.TypeRepository;
 import com.merakses.sensorsmonitorbackend.repository.UnitRepository;
 
@@ -35,10 +36,12 @@ public abstract class SensorMapper {
     public abstract List<SensorResponseDto> mapSensorListToResponseDtoList(List<Sensor> sensorList);
 
     protected Type getTypeById(long typeId) {
-        return typeRepository.findById(typeId).orElseThrow();
+        return typeRepository.findById(typeId).orElseThrow(() ->
+            new EntityNotFoundException(String.format("Can't find type with id %d", typeId)));
     }
 
     protected Unit getUnitById(long unitId) {
-        return unitRepository.findById(unitId).orElseThrow();
+        return unitRepository.findById(unitId).orElseThrow(() ->
+            new EntityNotFoundException(String.format("Can't find type with id %d", unitId)));
     }
 }

@@ -9,4 +9,6 @@ public interface SensorService {
     Sensor create(Sensor sensor);
 
     List<Sensor> getAll();
+
+    Sensor get(long id);
 }

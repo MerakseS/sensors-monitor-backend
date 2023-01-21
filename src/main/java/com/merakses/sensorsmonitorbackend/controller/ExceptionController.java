@@ -16,6 +16,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.merakses.sensorsmonitorbackend.exception.ApiError;
+import com.merakses.sensorsmonitorbackend.exception.EntityNotFoundException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -56,6 +57,12 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         apiError.setMessage("Validation error");
         apiError.addValidationFieldErrors(ex.getBindingResult().getFieldErrors());
         apiError.addValidationGlobalErrors(ex.getBindingResult().getGlobalErrors());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException exception) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, "Entity not found", exception);
         return buildResponseEntity(apiError);
     }
 

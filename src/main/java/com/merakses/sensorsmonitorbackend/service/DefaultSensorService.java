@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.merakses.sensorsmonitorbackend.entity.Sensor;
+import com.merakses.sensorsmonitorbackend.exception.EntityNotFoundException;
 import com.merakses.sensorsmonitorbackend.repository.SensorRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,18 @@ public class DefaultSensorService implements SensorService {
         List<Sensor> sensorList = sensorRepository.findAll();
         log.info("Successfully found all sensors");
         return sensorList;
+    }
+
+    @Override
+    public Sensor get(long id) {
+        Sensor sensor = getSensorById(id);
+        log.info("Successfully found sensor with id {}", sensor.getId());
+        return sensor;
+    }
+
+    private Sensor getSensorById(long id) {
+        return sensorRepository.findById(id).orElseThrow(() ->
+            new EntityNotFoundException(String.format("Can't find sensor with id %d", id))
+        );
     }
 }

@@ -1,7 +1,10 @@
 package com.merakses.sensorsmonitorbackend.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +33,12 @@ public class SensorController {
         sensor = sensorService.create(sensor);
         SensorResponseDto responseDto = sensorMapper.mapSensorToResponseDto(sensor);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<SensorResponseDto>> getAll() {
+        List<Sensor> sensorList = sensorService.getAll();
+        return ResponseEntity.ok(sensorMapper.mapSensorListToResponseDtoList(sensorList));
     }
 }
 

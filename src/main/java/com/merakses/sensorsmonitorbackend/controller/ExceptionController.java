@@ -25,7 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 public class ExceptionController extends ResponseEntityExceptionHandler {
 
     @Override
-    protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleMissingServletRequestParameter(MissingServletRequestParameterException ex,
+        HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+
         String message = String.format("%s is missing", ex.getParameterName());
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, message, ex));
     }
@@ -47,7 +49,9 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
+        HttpStatusCode status, WebRequest request) {
+
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
         apiError.setMessage("Validation error");
         apiError.addValidationFieldErrors(ex.getBindingResult().getFieldErrors());

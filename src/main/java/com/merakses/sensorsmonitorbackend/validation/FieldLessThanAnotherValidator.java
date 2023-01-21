@@ -19,8 +19,9 @@ public class FieldLessThanAnotherValidator implements ConstraintValidator<FieldL
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
-        Integer fromValue = (Integer) new BeanWrapperImpl(value).getPropertyValue(from);
-        Integer toValue = (Integer) new BeanWrapperImpl(value).getPropertyValue(to);
+        BeanWrapperImpl beanWrapper = new BeanWrapperImpl(value);
+        Integer fromValue = (Integer) beanWrapper.getPropertyValue(from);
+        Integer toValue = (Integer) beanWrapper.getPropertyValue(to);
 
         if (fromValue != null && toValue != null) {
             return fromValue < toValue;

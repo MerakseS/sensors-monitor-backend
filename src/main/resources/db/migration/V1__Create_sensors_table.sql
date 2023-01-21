@@ -1,7 +1,7 @@
 create table types
 (
     id   bigserial,
-    name varchar,
+    name varchar(30) not null,
     primary key (id)
 );
 
@@ -14,7 +14,7 @@ values ('Pressure'),
 create table units
 (
     id   bigserial,
-    name varchar,
+    name varchar(30) not null,
     primary key (id)
 );
 

@@ -28,6 +28,7 @@ public class Unit {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "name", nullable = false, length = 30)
     private String name;
 
     @Override

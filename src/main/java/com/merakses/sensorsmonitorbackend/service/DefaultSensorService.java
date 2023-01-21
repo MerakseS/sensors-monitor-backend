@@ -49,9 +49,17 @@ public class DefaultSensorService implements SensorService {
 
         sensor.setId(id);
         sensorRepository.save(sensor);
-
         log.info("Successfully updated sensor with id {}", sensor.getId());
+
         return sensor;
+    }
+
+    @Override
+    @Transactional
+    public void delete(long id) {
+        Sensor sensor = getSensorById(id);
+        sensorRepository.delete(sensor);
+        log.info("Successfully deleted sensor with id {}", id);
     }
 
     private Sensor getSensorById(long id) {

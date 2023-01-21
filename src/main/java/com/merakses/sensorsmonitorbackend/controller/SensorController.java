@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,6 +57,12 @@ public class SensorController {
         Sensor sensor = sensorMapper.mapRequestDtoToSensor(sensorRequestDto);
         sensor = sensorService.update(id, sensor);
         return ResponseEntity.ok(sensorMapper.mapSensorToResponseDto(sensor));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable long id) {
+        sensorService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }
 

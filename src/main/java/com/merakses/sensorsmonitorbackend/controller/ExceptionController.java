@@ -66,6 +66,12 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    protected ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException exception) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, "Page not found", exception);
+        return buildResponseEntity(apiError);
+    }
+
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleAllExceptions(Exception ex) {
         log.error("Unexpected error", ex);

@@ -2,6 +2,7 @@ package com.merakses.sensorsmonitorbackend.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,7 @@ import com.merakses.sensorsmonitorbackend.mapper.SensorMapper;
 import com.merakses.sensorsmonitorbackend.service.SensorService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -42,6 +44,12 @@ public class SensorController {
     public ResponseEntity<List<SensorResponseDto>> getAll() {
         List<Sensor> sensorList = sensorService.getAll();
         return ResponseEntity.ok(sensorMapper.mapSensorListToResponseDtoList(sensorList));
+    }
+
+    @GetMapping("/page/{page}")
+    public ResponseEntity<Page<SensorResponseDto>> getPage(@PathVariable("page") @Min(0) int pageNumber) {
+        Page<Sensor> sensorPage = sensorService.getPage(pageNumber);
+        return ResponseEntity.ok(sensorPage.map(sensorMapper::mapSensorToResponseDto));
     }
 
     @GetMapping("/{id}")

@@ -2,6 +2,9 @@ package com.merakses.sensorsmonitorbackend.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class DefaultSensorService implements SensorService {
 
+    private static final int PAGE_SIZE = 4;
+
     private final SensorRepository sensorRepository;
 
     @Override
@@ -33,6 +38,14 @@ public class DefaultSensorService implements SensorService {
         List<Sensor> sensorList = sensorRepository.findAll();
         log.info("Successfully found all sensors");
         return sensorList;
+    }
+
+    @Override
+    public Page<Sensor> getPage(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, PAGE_SIZE);
+        Page<Sensor> sensorPage = sensorRepository.findAll(pageable);
+        log.info("Successfully found page {} of sensors", pageNumber);
+        return sensorPage;
     }
 
     @Override

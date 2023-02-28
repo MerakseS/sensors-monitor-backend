@@ -1,7 +1,5 @@
 package com.merakses.sensorsmonitorbackend.service;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 
 import com.merakses.sensorsmonitorbackend.entity.Sensor;
@@ -10,9 +8,9 @@ public interface SensorService {
 
     Sensor create(Sensor sensor);
 
-    List<Sensor> getAll();
-
     Page<Sensor> getPage(int pageNumber);
+
+    Page<Sensor> search(String searchText, int pageNumber);
 
     Sensor get(long id);
 

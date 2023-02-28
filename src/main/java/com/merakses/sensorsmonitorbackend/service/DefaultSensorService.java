@@ -1,7 +1,5 @@
 package com.merakses.sensorsmonitorbackend.service;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,17 +32,18 @@ public class DefaultSensorService implements SensorService {
     }
 
     @Override
-    public List<Sensor> getAll() {
-        List<Sensor> sensorList = sensorRepository.findAll();
-        log.info("Successfully found all sensors");
-        return sensorList;
-    }
-
-    @Override
     public Page<Sensor> getPage(int pageNumber) {
         Pageable pageable = PageRequest.of(pageNumber, PAGE_SIZE);
         Page<Sensor> sensorPage = sensorRepository.findAll(pageable);
         log.info("Successfully found page {} of sensors", pageNumber);
+        return sensorPage;
+    }
+
+    @Override
+    public Page<Sensor> search(String searchText, int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, PAGE_SIZE);
+        Page<Sensor> sensorPage = sensorRepository.findAllByAllFields(searchText, pageable);
+        log.info("Successfully found page {} of sensors by text {}", pageable, searchText);
         return sensorPage;
     }
 

@@ -1,7 +1,5 @@
 package com.merakses.sensorsmonitorbackend.controller;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,14 +31,14 @@ public class DefaultSensorController implements SensorController {
     }
 
     @Override
-    public ResponseEntity<List<SensorResponseDto>> getAll() {
-        List<Sensor> sensorList = sensorService.getAll();
-        return ResponseEntity.ok(sensorMapper.mapSensorListToResponseDtoList(sensorList));
+    public ResponseEntity<Page<SensorResponseDto>> getPage(int pageNumber) {
+        Page<Sensor> sensorPage = sensorService.getPage(pageNumber);
+        return ResponseEntity.ok(sensorPage.map(sensorMapper::mapSensorToResponseDto));
     }
 
     @Override
-    public ResponseEntity<Page<SensorResponseDto>> getPage(int pageNumber) {
-        Page<Sensor> sensorPage = sensorService.getPage(pageNumber);
+    public ResponseEntity<Page<SensorResponseDto>> search(String searchText, int pageNumber) {
+        Page<Sensor> sensorPage = sensorService.search(searchText, pageNumber);
         return ResponseEntity.ok(sensorPage.map(sensorMapper::mapSensorToResponseDto));
     }
 

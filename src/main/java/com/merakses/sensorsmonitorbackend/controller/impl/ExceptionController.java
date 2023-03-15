@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -76,6 +77,12 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     protected ResponseEntity<Object> handleBadCredentials(BadCredentialsException exception) {
         ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, "Incorrect login or password", exception);
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    protected ResponseEntity<Object> handleAccessDenied(AccessDeniedException exception) {
+        ApiError apiError = new ApiError(HttpStatus.FORBIDDEN, "Forbidden", exception);
         return buildResponseEntity(apiError);
     }
 

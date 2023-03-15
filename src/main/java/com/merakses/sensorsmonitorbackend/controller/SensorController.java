@@ -2,6 +2,7 @@ package com.merakses.sensorsmonitorbackend.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +22,12 @@ import jakarta.validation.constraints.Min;
 public interface SensorController {
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRATOR')")
     ResponseEntity<SensorResponseDto> create(@RequestBody @Valid SensorRequestDto sensorRequestDTO);
 
     @GetMapping
-    ResponseEntity<Page<SensorResponseDto>> getPage(@RequestParam(name = "page", defaultValue = "0") @Min(0) int pageNumber);
+    ResponseEntity<Page<SensorResponseDto>> getPage(
+        @RequestParam(name = "page", defaultValue = "0") @Min(0) int pageNumber);
 
     @GetMapping("/search")
     ResponseEntity<Page<SensorResponseDto>> search(@RequestParam(name = "text") String searchText,
@@ -34,9 +37,11 @@ public interface SensorController {
     ResponseEntity<SensorResponseDto> get(@PathVariable long id);
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRATOR')")
     ResponseEntity<SensorResponseDto> update(@PathVariable long id,
         @RequestBody @Valid SensorRequestDto sensorRequestDto);
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRATOR')")
     ResponseEntity<Object> delete(@PathVariable long id);
 }

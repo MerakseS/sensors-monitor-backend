@@ -1,11 +1,11 @@
-package com.merakses.sensorsmonitorbackend.controller;
+package com.merakses.sensorsmonitorbackend.controller.impl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.merakses.sensorsmonitorbackend.controller.SensorController;
 import com.merakses.sensorsmonitorbackend.dto.SensorRequestDto;
 import com.merakses.sensorsmonitorbackend.dto.SensorResponseDto;
 import com.merakses.sensorsmonitorbackend.entity.Sensor;
@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/sensors")
 public class DefaultSensorController implements SensorController {
 
     private final SensorMapper sensorMapper;

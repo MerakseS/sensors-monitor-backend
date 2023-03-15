@@ -1,4 +1,4 @@
-package com.merakses.sensorsmonitorbackend.service;
+package com.merakses.sensorsmonitorbackend.service.impl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.merakses.sensorsmonitorbackend.entity.Sensor;
 import com.merakses.sensorsmonitorbackend.exception.EntityNotFoundException;
 import com.merakses.sensorsmonitorbackend.repository.SensorRepository;
+import com.merakses.sensorsmonitorbackend.service.SensorService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -22,9 +22,12 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-validation:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
-
+    implementation "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion"
-    developmentOnly "org.springframework.boot:spring-boot-devtools:$springBootVersion"
+
+    implementation "io.jsonwebtoken:jjwt:$jwtVersion"
+    implementation "javax.xml.bind:jaxb-api:$jaxbApiVersion"
+    implementation "org.yaml:snakeyaml:$snakeyamlVersion"
 
     runtimeOnly "org.postgresql:postgresql:$postgresqlDriverVersion"
     implementation "org.flywaydb:flyway-core:$flywayVersion"
@@ -35,8 +38,8 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
 
+    developmentOnly "org.springframework.boot:spring-boot-devtools:$springBootVersion"
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
-    testImplementation "org.springframework.security:spring-security-test:$securityTestVersion"
 }
 
 tasks.named('test') {

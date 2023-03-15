@@ -1,4 +1,4 @@
-package com.merakses.sensorsmonitorbackend.controller;
+package com.merakses.sensorsmonitorbackend.controller.impl;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -69,6 +70,12 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     protected ResponseEntity<Object> handleIllegalArgument(IllegalArgumentException exception) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, "Page not found", exception);
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    protected ResponseEntity<Object> handleBadCredentials(BadCredentialsException exception) {
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, "Incorrect login or password", exception);
         return buildResponseEntity(apiError);
     }
 

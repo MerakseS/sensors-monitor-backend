@@ -11,3 +11,7 @@ spring:
     password: ${POSTGRES_DB_PASSWORD:postgres}
     username: ${POSTGRES_DB_USERNAME:postgres}
     url: jdbc:postgresql://${POSTGRES_DB_HOST:localhost:5432}/${POSTGRES_DB_NAME:sensors-monitor}
+
+jwt:
+  secretKey: secret_key
+  sessionTime: 120000000

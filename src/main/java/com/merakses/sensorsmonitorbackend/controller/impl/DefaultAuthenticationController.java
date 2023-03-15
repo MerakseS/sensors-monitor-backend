@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.merakses.sensorsmonitorbackend.controller.AuthenticationController;
 import com.merakses.sensorsmonitorbackend.dto.AuthRequestDto;
 import com.merakses.sensorsmonitorbackend.dto.AuthResponseDto;
-import com.merakses.sensorsmonitorbackend.service.JWTService;
+import com.merakses.sensorsmonitorbackend.service.AuthenticationService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +20,7 @@ public class DefaultAuthenticationController implements AuthenticationController
 
     private final AuthenticationManager authenticationManager;
 
-    private final JWTService jwtService;
+    private final AuthenticationService authenticationService;
 
     @Override
     public ResponseEntity<AuthResponseDto> authenticate(AuthRequestDto authRequestDto) {
@@ -28,7 +28,7 @@ public class DefaultAuthenticationController implements AuthenticationController
             authRequestDto.getLogin(), authRequestDto.getPassword());
 
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        String jwt = jwtService.generateToken((UserDetails) authentication.getPrincipal());
+        String jwt = authenticationService.generateToken((UserDetails) authentication.getPrincipal());
 
         return ResponseEntity.ok(new AuthResponseDto(jwt));
     }

@@ -10,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.merakses.sensorsmonitorbackend.service.JWTService;
+import com.merakses.sensorsmonitorbackend.service.AuthenticationService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
 
-    private final JWTService jwtService;
+    private final AuthenticationService authenticationService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -33,11 +33,11 @@ public class JWTFilter extends OncePerRequestFilter {
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-            username = jwtService.extractUsername(jwt);
+            username = authenticationService.extractUsername(jwt);
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            String commaSeparatedAuthorities = jwtService.extractAuthorities(jwt);
+            String commaSeparatedAuthorities = authenticationService.extractAuthorities(jwt);
             List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(commaSeparatedAuthorities);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 username, null, authorities);

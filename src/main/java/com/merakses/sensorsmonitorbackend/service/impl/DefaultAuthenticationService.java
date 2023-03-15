@@ -6,17 +6,22 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.merakses.sensorsmonitorbackend.service.JWTService;
+import com.merakses.sensorsmonitorbackend.entity.User;
+import com.merakses.sensorsmonitorbackend.repository.UserRepository;
+import com.merakses.sensorsmonitorbackend.service.AuthenticationService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClaims;
+import lombok.RequiredArgsConstructor;
 
 @Service
-public class DefaultJWTService implements JWTService {
+@RequiredArgsConstructor
+public class DefaultAuthenticationService implements AuthenticationService {
 
     private static final String AUTHORITIES_KEY = "authorities";
 
@@ -25,6 +30,22 @@ public class DefaultJWTService implements JWTService {
 
     @Value("${jwt.sessionTime}")
     private long sessionTime;
+
+    private final UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByLogin(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("User with login %s doesn't exists", username));
+        }
+
+        return org.springframework.security.core.userdetails.User.builder()
+            .username(user.getLogin())
+            .password(user.getPassword())
+            .roles(user.getRole())
+            .build();
+    }
 
     @Override
     public String generateToken(UserDetails userDetails) {

@@ -32,5 +32,4 @@ public class SensorRequestDto {
 
     @Length(message = "Description length can't be more than 200 symbols.", max = 200)
     private String description;
-
 }

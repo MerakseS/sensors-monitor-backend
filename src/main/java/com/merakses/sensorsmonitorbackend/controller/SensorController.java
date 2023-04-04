@@ -3,6 +3,7 @@ package com.merakses.sensorsmonitorbackend.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.merakses.sensorsmonitorbackend.dto.SensorResponseDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 
+@CrossOrigin
 @RequestMapping("/api/sensors")
 public interface SensorController {
 

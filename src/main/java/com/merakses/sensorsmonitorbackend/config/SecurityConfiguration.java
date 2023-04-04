@@ -26,15 +26,14 @@ public class SecurityConfiguration {
 
     private final JWTFilter jwtFilter;
 
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
             .csrf(AbstractHttpConfigurer::disable)
+            .cors().and()
             .authorizeHttpRequests(customizer -> customizer
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/authenticate").permitAll()
+                .requestMatchers("/api/authenticate").permitAll()
                 .anyRequest().authenticated())
             .sessionManagement(customizer -> customizer
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -49,6 +48,6 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return passwordEncoder;
+        return new BCryptPasswordEncoder();
     }
 }

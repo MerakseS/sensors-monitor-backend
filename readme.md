@@ -2,12 +2,13 @@
 
 API для управления сенсорами.
 
-## Стек
+## Стек технологий
 
 * Java 19,
 * Spring Boot,
 * Spring Security,
-* Spring Data JPA
+* Spring Data JPA,
+* JWT
 
 ## Инструкция по сборке и запуску
 

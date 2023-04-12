@@ -11,16 +11,16 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 @Configuration
 public class OpenAPIConfiguration {
 
-    private static final String securitySchemeName = "bearerAuth";
+    private static final String SECURITY_SCHEME_NAME = "bearerAuth";
 
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI()
             .addSecurityItem(new SecurityRequirement()
-                .addList(securitySchemeName))
+                .addList(SECURITY_SCHEME_NAME))
             .components(new Components()
-                .addSecuritySchemes(securitySchemeName, new SecurityScheme()
-                    .name(securitySchemeName)
+                .addSecuritySchemes(SECURITY_SCHEME_NAME, new SecurityScheme()
+                    .name(SECURITY_SCHEME_NAME)
                     .type(SecurityScheme.Type.HTTP)
                     .scheme("bearer")
                     .bearerFormat("JWT")));

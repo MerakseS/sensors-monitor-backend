@@ -12,6 +12,20 @@ spring:
     username: ${POSTGRES_DB_USERNAME:postgres}
     url: jdbc:postgresql://${POSTGRES_DB_HOST:localhost:5432}/${POSTGRES_DB_NAME:sensors-monitor}
 
+logging:
+  level:
+    com.merakses.sensorsmonitorbackend: info
+    root: info
+  file:
+    name: ${LOGS_DIRECTORY:logs}/sensor-monitor-backend.log
+  pattern:
+    dateformat: dd-MM-yyyy HH:mm:ss.SSS, Europe/Minsk
+  logback:
+    rollingpolicy:
+      max-history: 30
+      max-file-size: 10MB
+      file-name-pattern: ${LOGS_DIRECTORY:logs}/archived/sensor-monitor-backend.%d{dd-MM-yyyy}.%i.log
+
 jwt:
   secretKey: secret_key
   sessionTime: 120000000
